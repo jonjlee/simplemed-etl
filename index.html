@@ -26,8 +26,7 @@
           <ul class="nav nav-sidebar">
             <li class="section-title">Settings</li>
             <li class="section">
-                <div>Threshold:</div>
-                <input class="" id="threshold" data-slider-id='threshold-slider' type="text" data-slider-min="0" data-slider-max="12" data-slider-step="1" data-slider-value="4"/>
+            <div><em>Add analysis parameters here</em></div>
             </li>
           </ul>
         </div>
@@ -50,16 +49,18 @@
     <!-- Templates -->
     <script id="table-template" type="text/template">
       <tbody>
-        <% for (var row = 0; row < rows.length; row++) { %>
+        <% _.each(rows, function(row, rownum) { %>
           <tr>
-            <% for (var col = 0; col < rows[row].length; col++) { %>
-              <% header = (row < num_header_rows || col < num_header_cols); %>
-              <% if (header) { %> <th> <% } else { %> <td> <% } %>
-              <%= rows[row][col] %>
-              <% if (header) { %> </th> <% } else { %> </td> <% } %>
-            <% } %>
+          <% _.each(row, function(col, colnum) {
+            header = (rownum < num_header_rows || colnum < num_header_cols);
+            if (header) {
+              print("<th>" + col + "</th>");
+            } else {
+              print("<td>" + col + "</td>");
+            }
+          }); %>
           </tr>
-        <% } %>
+        <% }); %>
       </tbody>
     </script>
 
