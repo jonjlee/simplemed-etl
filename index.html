@@ -10,7 +10,8 @@
     <title>Data Analysis</title>
 
     <link href="static/thirdparty/bootstrap-3.3.4/css/bootstrap.min.css" rel="stylesheet">
-    <link href="stats.css" rel="stylesheet">
+    <link href="static/thirdparty/bootstrap-slider-4.8.1/css/bootstrap-slider.min.css" rel="stylesheet">
+    <link href="view.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -22,14 +23,18 @@
   <body>
     <div class="container-fluid">
       <div class="row">
+        <!-- Settings sidebar -->
         <div class="col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="section-title">Settings</li>
             <li class="section">
-              <div><em>Add analysis parameters here</em></div>
+              <div>Add analysis parameters here</div>
+              <input id="param1" class="slider" type="text"/>
             </li>
           </ul>
         </div>
+
+        <!-- Main content -->
         <div class="col-md-10 col-md-offset-2 main">
             <h2 class="sub-header">Summary</h2>
             <div class="row">
@@ -38,40 +43,39 @@
                     <table class="table" id="table1"></table>
                 </div>
                 <div class="col-md-6">
-                    <h4>Histogram</h4>
+                    <h4>Random data</h4>
                     <div class="graph" id="graph1"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-6">
+                    <h4>Histogram</h4>
+                    <table class="graph" id="histogram1"></table>
                 </div>
             </div>
           </div>
       </div>
     </div>
 
-    <!-- Templates -->
-    <script id="table-template" type="text/template">
-      <tbody>
-        <% _.each(rows, function(row, rownum) { %>
-          <tr>
-          <% _.each(row, function(col, colnum) {
-            header = (rownum < num_header_rows || colnum < num_header_cols);
-            if (header) {
-              print("<th>" + col + "</th>");
-            } else {
-              print("<td>" + col + "</td>");
-            }
-          }); %>
-          </tr>
-        <% }); %>
-      </tbody>
-    </script>
+    <!-- Templates. Define underscorejs templates and use them with:
+            var tpl = _.template($('#example-template').html());
+            $('#container').append(tpl({ data: 'xyz' }); -->
+    <!-- <script id="example-template" type="text/template"></script>-->
 
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="static/thirdparty/jquery-1.11.2.min.js"></script>
     <script src="static/thirdparty/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script src="static/thirdparty/bootstrap-slider-4.8.1/bootstrap-slider.min.js"></script>
+    <script src="static/thirdparty/moment.min.js"></script>
+    <script src="static/thirdparty/simple_statistics.js"></script>
     <script src="static/thirdparty/flotr2.min.js"></script>
+    <script src="static/histogram.js"></script>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="/static/thirdparty/FlashCanvas/bin/flashcanvas.js"></script>
     <![endif]-->
-    <script src="data.js"></script>
-    <script src="stats.js"></script>
+    <script src="utils.js"></script>  <!-- utility functions -->
+    <script src="data.js"></script>   <!-- include data set definitions -->
+    <script src="app.js"></script>   <!-- definitions for init(), calc(), render() -->
+    <script> _init(); </script>
   </body>
 </html>
