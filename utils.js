@@ -119,6 +119,14 @@ $(function() {
                 track: true,
                 trackFormatter: trackFormatter });
 
+        // Provide x-axis labels to Flotr if specified
+        if (!options.xaxis && options.xlabels) {
+            xaxis = {
+                min: -0.7,
+                max: _.max(x) + 0.7,
+                tickFormatter: function (x) { return options.xlabels[parseInt(x)] || ''; }
+            }
+        }
         Flotr.draw($(elId)[0], [
                 { 
                     data: dd,
@@ -198,6 +206,17 @@ $(function() {
         );
     }
 
+    // Draw a line graph using the data in options.y with the x-axis specified
+    // by options.x0 and options.dx.
+    // options = {
+    //      x0: 0,                                              // start of first bin
+    //      dx: 5,                                              // size of bins
+    //      y: [10, 11, ...],                                   // values of bins
+    //      xlabels: ['Monday', 'Tuesday', ...],                // Override default x labels generated from x0 and dx
+    //      trackFormatter: { Flotr mouse.trackFormatter() },   // Ignored if mouse is specified.
+    //      mouse: { Flotr mouse },
+    //      colors: ['#00A8F0', ...],
+    // }
     drawHistogram = function(elId, options) {
         options = argDefault(options, {});
 
@@ -220,6 +239,7 @@ $(function() {
 
         // Mouse tracker
         var trackFormatter = function(v) { return '[' + xaxis.tickFormatter(v.x) + ']: ' + parseInt(v.y); }
+        
         return drawBarGraph(elId, { x: x, y: y, xaxis: xaxis, trackFormatter: trackFormatter });
     }
 
