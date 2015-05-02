@@ -20,7 +20,7 @@ def main():
         startline=2)
 
     # Transform: filter/process data
-    anonymized = transform.remove_fields(data, ['name','dob'])
+    anonymized = transform.remove_fields(data, ['Name','DOB'])
 
     # Load: export data for further analysis
     load.to_js(anonymized, 'data.js')
